@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="todoContainer">
+      <div class="tareasContainer">
+        <button class="btnAddTarea">+</button>
+        <h1>Tareas</h1>
+        <div class="interiorContainer">
+          <ul id="listaTareas">
+             <li>Sin tareas Pendientes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="TareaAddContainer">
+        <h2>Añadir Tarea</h2>
+      <label>Escriba la tarea</label>
+      <input class="tareaInfo" type="text" />
+      <button id="tareaAdd">Añadir</button>
+    </div>
+
+    <div class="tareasCompletadas">
+        <h2>Tareas Completadas</h2>
+        <ul class="completedTask">
+            <li>Sin tareas Completadas</li>
+        </ul>
+    </div>
+       <div class="tareasEliminadas">
+        <h2>Tareas Eliminadas</h2>
+        <ul class="eliminadasTask">
+            <li>Sin tareas Eliminadas</li>
+        </ul>
+    </div>
+    <button class="doneButton">Done</button>
+    <button class="eliminatedButton">Eliminated</button>
+    <script src="./main.js"></script>
+  </body>
+</html>
