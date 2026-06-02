@@ -1,0 +1,391 @@
+@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap");
+
+/* ─── Variables ─────────────────────────────────────────────── */
+:root {
+  --bg: #0e0e10;
+  --surface: #18181c;
+  --surface2: #222228;
+  --border: #2e2e38;
+  --accent: #c8ff57;
+  --accent2: #ff5757;
+  --accent3: #57c8ff;
+  --text: #eeeef2;
+  --muted: #6b6b7a;
+  --radius: 14px;
+  --mono: "DM Mono", monospace;
+  --sans: "Syne", sans-serif;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem 6rem;
+  gap: 1.25rem;
+}
+
+/* Grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.35;
+}
+
+/* ─── Main todo container ────────────────────────────────────── */
+#todoContainer {
+  width: 100%;
+  max-width: 580px;
+}
+
+.tareasContainer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  position: relative;
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 24px 48px rgba(0, 0, 0, 0.5);
+}
+
+.tareasContainer h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  padding-left: 0.1rem;
+}
+
+/* Add button — floating top-right */
+.btnAddTarea {
+  position: absolute;
+  top: 1.6rem;
+  right: 1.6rem;
+  width: 38px;
+  height: 38px;
+  background: var(--accent);
+  color: #0e0e10;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+.btnAddTarea:hover {
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 0 18px rgba(200, 255, 87, 0.35);
+}
+
+/* ─── Task list ──────────────────────────────────────────────── */
+.interiorContainer {
+  max-height: 380px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+#listaTareas {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#listaTareas li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--text);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  animation: slideIn 0.2s ease;
+}
+#listaTareas li:first-child:only-child {
+  color: var(--muted);
+  justify-content: center;
+  border-style: dashed;
+  background: transparent;
+}
+#listaTareas li:hover {
+  border-color: var(--accent);
+  background: #222228cc;
+}
+
+/* Task text takes remaining space */
+#listaTareas li > :first-child {
+  flex: 1;
+}
+
+/* Action buttons inside each task */
+#listaTareas li button {
+  padding: 3px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--mono);
+  transition:
+    opacity 0.15s,
+    transform 0.12s;
+  flex-shrink: 0;
+}
+#listaTareas li button:hover {
+  opacity: 0.85;
+  transform: scale(1.1);
+}
+
+/* Edit — "-" */
+#listaTareas li button:nth-of-type(1) {
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+/* Delete — "e" */
+#listaTareas li button:nth-of-type(2) {
+  background: rgba(255, 87, 87, 0.15);
+  color: var(--accent2);
+  border: 1px solid rgba(255, 87, 87, 0.25);
+}
+/* Done — "v" */
+#listaTareas li button:nth-of-type(3) {
+  background: rgba(200, 255, 87, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(200, 255, 87, 0.25);
+}
+
+/* ─── Add task panel ─────────────────────────────────────────── */
+.TareaAddContainer {
+  display: none;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 0 32px rgba(200, 255, 87, 0.08);
+  animation: fadeDown 0.2s ease;
+}
+
+.TareaAddContainer h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.TareaAddContainer label {
+  display: block;
+  font-size: 0.78rem;
+  font-family: var(--mono);
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.tareaInfo {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s;
+  margin-bottom: 0.9rem;
+}
+.tareaInfo:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(200, 255, 87, 0.1);
+}
+
+#tareaAdd {
+  width: 100%;
+  padding: 0.65rem;
+  background: var(--accent);
+  color: #0e0e10;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
+}
+#tareaAdd:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+#tareaAdd:active {
+  transform: translateY(0);
+}
+
+/* ─── Completed / Eliminated panels ─────────────────────────── */
+.tareasCompletadas,
+.tareasEliminadas {
+  display: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+  animation: fadeDown 0.2s ease;
+}
+
+.tareasCompletadas h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.tareasEliminadas h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 1rem;
+}
+
+.completedTask,
+.eliminadasTask {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.completedTask li,
+.eliminadasTask li {
+  padding: 0.55rem 0.85rem;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+
+.completedTask li {
+  background: rgba(200, 255, 87, 0.07);
+  border: 1px solid rgba(200, 255, 87, 0.15);
+  color: var(--accent);
+  text-decoration: line-through;
+  text-decoration-color: rgba(200, 255, 87, 0.4);
+}
+.eliminadasTask li {
+  background: rgba(255, 87, 87, 0.07);
+  border: 1px solid rgba(255, 87, 87, 0.15);
+  color: var(--accent2);
+  text-decoration: line-through;
+  text-decoration-color: rgba(255, 87, 87, 0.4);
+}
+
+/* ─── Bottom action bar ──────────────────────────────────────── */
+.doneButton,
+.eliminatedButton {
+  position: fixed;
+  bottom: 1.5rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.65rem 1.4rem;
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.doneButton {
+  left: calc(50% - 130px);
+  background: var(--accent);
+  color: #0e0e10;
+}
+.eliminatedButton {
+  right: calc(50% - 130px);
+  background: var(--accent2);
+  color: #fff;
+}
+
+.doneButton:hover,
+.eliminatedButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* ─── Animations ─────────────────────────────────────────────── */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
