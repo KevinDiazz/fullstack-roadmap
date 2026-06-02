@@ -11,6 +11,22 @@ interface ProductApi {
   stock: number;
   rating: number;
 }
+interface NewProductApi {
+  title: string;
+  price: number;
+  category: string;
+  stock: number;
+  rating: number;
+}
+interface DeleteProductApi {
+  title: string;
+  price: number;
+  category: string;
+  stock: number;
+  rating: number;
+  isDeleted: boolean;
+  deletedOn: Date;
+}
 interface Recipe {
   id: number;
   name: string;
@@ -80,6 +96,50 @@ async function getRecipes(): Promise<ResponseApiRecipes> {
   }
   return (await response.json()) as ResponseApiRecipes;
 }
+
+async function addProduct(product: NewProductApi): Promise<NewProductApi> {
+  const newProduct: NewProductApi = {
+    title: "iphone 13",
+    price: 544,
+    category: "Electronic",
+    stock: 20,
+    rating: 4.3,
+  };
+  const response = await fetch("https://dummyjson.com/products/add", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newProduct),
+  });
+  if (!response.ok) {
+    throw new Error(`HTTT ${response.status}`);
+  }
+  return (await response.json()) as NewProductApi;
+}
+async function updateProduct(
+  updateProduct: NewProductApi,
+  id: number,
+): Promise<ProductApi> {
+  const response = await fetch(`https://dummyjson.com/products/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updateProduct),
+  });
+  if (!response.ok) {
+    throw new Error(`HTTT ${response.status}`);
+  }
+  return (await response.json()) as ProductApi;
+}
+
+async function deleteProduct(id: number): Promise<DeleteProductApi> {
+  const response = await fetch(`https://dummyjson.com/products/${id}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error(`HTTT ${response.status}`);
+  }
+  return (await response.json()) as DeleteProductApi;
+}
+
 async function mainApi(): Promise<void> {
   try {
     const [products, recipes] = await Promise.all([
