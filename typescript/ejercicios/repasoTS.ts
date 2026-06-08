@@ -362,3 +362,4 @@ let groupByDepartament = employeeArr.reduce(
   {} as Record<string, Employee[]>,
 );
 let salaryDesc = employeeArr.sort((a, b) => b.salary - a.salary);
+export {};

@@ -161,3 +161,4 @@ const userBasicUpdated: UserBasic = updateUserBasic(userBasic1, {
   name: "Kevin Diaz",
 });
 console.log(userBasicUpdated);
+export {};
