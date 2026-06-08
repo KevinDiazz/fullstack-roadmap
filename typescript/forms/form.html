@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="form">
+      <p class="enum">
+        Practica 1: Cada vez que el usuario escriba, mostrar el contenido en el
+        parrafo
+      </p>
+      <input id="name" />
+      <p id="preview"></p>
+    </div>
+    <div class="form">
+      <p class="enum">Practica 2:Mostrar cuántos caracteres lleva escritos.</p>
+      <textarea id="message"></textarea>
+      <span id="counter"></span>
+    </div>
+    <div class="form">
+      <p class="enum">
+        Practica 3:Mostrar el texto en mayúsculas mientras escribe.
+      </p>
+      <input id="text" />
+      <p id="result"></p>
+    </div>
+    <div class="form">
+      <p class="enum">
+        Practica 4:Cambiar el color de fondo del div cuando cambie el select.
+      </p>
+      <select id="color">
+        <option value="red">Rojo</option>
+        <option value="blue">Azul</option>
+        <option value="green">Verde</option>
+      </select>
+
+      <div id="box"></div>
+    </div>
+    <div class="form">
+      <p class="enum">
+        Practica 5: El botón sólo debe activarse cuando el checkbox esté
+        marcado.
+      </p>
+      <input type="checkbox" id="terms" />
+      <button class="boton" disabled>Continuar</button>
+    </div>
+    <div class="form">
+      <p class="enum">Practica 6 y 7: Campo obligatorio y longitud minima</p>
+      <input id="nameObligatorio" />
+      <p class="info"></p>
+      <button>Enviar</button>
+    </div>
+
+    <div class="form">
+      <p class="enum">Practica 8:Validar Email con regex</p>
+      <input id="email" />
+      <p class="infoMail"></p>
+    </div>
+
+    <div class="form">
+      <p class="enum">Practica 9:Login</p>
+      <form id="miForm">
+        <label for="emailForm">Email</label>
+        <input id="emailForm" name="emailForm" type="text" />
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" />
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+
+    <div class="form">
+      <p class="enum">Practica 10:Signup</p>
+      <form id="miForm-2">
+        <label for="nameForm-2">Nombre</label>
+        <input id="nameForm-2" name="nameForm-2" type="text" />
+        <span class="spanName"></span>
+        <label for="emailForm-2">Email</label>
+        <input id="emailForm-2" name="emailForm-2" type="text" />
+        <span class="spanEmail"></span>
+        <label for="password-2">Password</label>
+        <input id="password-2" name="password-2" type="password" />
+        <span class="spanPassword"></span>
+        <label for="confirmPassword-2">Confirm Password</label>
+        <input
+          id="confirmPassword-2"
+          name="confirmPassword-2"
+          type="password"
+        />
+         <span class="spanConfirmPassword"></span>
+        <button id="submitButton" type="submit">Entrar</button>
+      </form>
+    </div>
+    <script type="module" src="./form.js"></script>
+  </body>
+</html>

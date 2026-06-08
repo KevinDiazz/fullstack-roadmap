@@ -102,3 +102,4 @@ async function main3(): Promise<void> {
   }
 }
 main3();
+export {};
