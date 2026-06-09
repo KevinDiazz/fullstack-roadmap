@@ -13,23 +13,6 @@ Este repositorio recopila ejercicios, proyectos y prácticas desarrollados duran
 * GitHub
 * Vite
 * Fetch API
-
----
-
-# Estructura del repositorio
-
-```txt
-fullstack-roadmap/
-
-├── Async/
-├── forms/
-├── ejercicios/
-├── UserManagementSystem/
-├── ManagementSystemWithUi/
-├── ProfessionalSignupForm/
-└── ToDoApp/
-```
-
 ---
 
 # Proyectos y prácticas
